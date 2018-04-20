@@ -1,0 +1,22 @@
+{
+  "name": "web-component-ie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antelopeb/web-component-ie.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antelopeb/web-component-ie/issues"
+  },
+  "homepage": "https://github.com/antelopeb/web-component-ie#readme",
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^1.2.0"
+  }
+}
