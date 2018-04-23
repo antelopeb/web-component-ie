@@ -1,5 +1,5 @@
 <script>
-	"use strict";
+	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -17,42 +17,64 @@
 
 			var _this = _possibleConstructorReturn(this, (FlagIcon.__proto__ || Object.getPrototypeOf(FlagIcon)).call(this));
 
-			_this._countryCode = null;
+			_this.countryCode = null;
+
+			var shadow = _this.attachShadow({ mode: 'open' });
+			var style = document.createElement('style');
+			var paragraph = document.createElement('p');
+
+			var country = _this.getAttribute('country');
+			paragraph.textContent = country;
+
+			style.textContent = 'p {color:red}';
+
+			shadow.appendChild(style);
+			shadow.appendChild(paragraph);
 			return _this;
 		}
 
+		// returns only the observed attributes
+
+
 		_createClass(FlagIcon, [{
-			key: "attributeChangedCallback",
+			key: 'attributeChangedCallback',
+
+
+			// is called when an observed attribute is changed.
 			value: function attributeChangedCallback(name, oldValue, newValue) {
+
 				// name will always be "country" due to observedAttributes
-				this._countryCode = newValue;
-				this._updateRendering();
+				this.countryCode = newValue;
+				this.updateRendering();
 			}
+
+			// is called when the element is created.
+
 		}, {
-			key: "connectedCallback",
+			key: 'connectedCallback',
 			value: function connectedCallback() {
-				this._updateRendering();
+				this.updateRendering();
 			}
+
+			// is called when the element is removed.
+
 		}, {
-			key: "_updateRendering",
-			value: function _updateRendering() {
-				console.log("Update rendering")
-				this.innerHTML = this._countryCode;
+			key: 'disconnectedCallback',
+			value: function disconnectedCallback() {}
+
+			// render method
+
+		}, {
+			key: 'updateRendering',
+			value: function updateRendering() {
+				this.innerHTML = this.countryCode;
 				// Left as an exercise for the reader. But, you'll probably want to
 				// check this.ownerDocument.defaultView to see if we've been
 				// inserted into a document with a browsing context, and avoid
 				// doing any work if not.
 			}
-		}, {
-			key: "country",
-			get: function get() {
-				return this._countryCode;
-			},
-			set: function set(v) {
-				this.setAttribute("country", v);
-			}
 		}], [{
-			key: "observedAttributes",
+			key: 'observedAttributes',
 			get: function get() {
 				return ["country"];
 			}
@@ -61,5 +83,6 @@
 		return FlagIcon;
 	}(HTMLElement);
 
-	window.customElements.define("flag-icon", FlagIcon);
+	customElements.define("flag-icon", FlagIcon);
+
 </script>

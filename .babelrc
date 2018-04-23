@@ -1,0 +1,9 @@
+// include before transform-es2015-classes
+{
+  "plugins": [
+    "transform-es2015-classes",
+    "transform-custom-element-classes"
+
+  ],
+  "presets": ["env"]
+}
