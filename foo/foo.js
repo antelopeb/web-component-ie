@@ -1,19 +1,7 @@
 class FlagIcon extends HTMLElement {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.countryCode = null;
-
-		const shadow = this.attachShadow({mode: 'open'});
-		const style = document.createElement('style');
-		let paragraph = document.createElement('p');
-
-		const country = this.getAttribute('country');
-		paragraph.textContent = country;
-
-		style.textContent = 'p {color:red}';
-
-		shadow.appendChild(style);
-		shadow.appendChild(paragraph);
 	}
 
 	// returns only the observed attributes
@@ -29,6 +17,22 @@ class FlagIcon extends HTMLElement {
 
 	// is called when the element is created.
 	connectedCallback() {
+		const shadow = this.attachShadow({mode: 'open'}),
+			style = document.createElement('style'),
+			currentDoc = document.querySelector( 'link[href$="foo.html"]').import,
+			template = currentDoc.querySelector('#template'),
+			country = document.createElement("p"),
+			clone = document.importNode(template.content, true);
+
+		style.textContent = 'p.country {color:red}; p.text {color: black}';
+
+		country.innerHTML = this.countryCode
+		country.setAttribute('class', 'country')
+		shadow.appendChild(style);
+		shadow.appendChild(clone);
+		shadow.appendChild(country);
+
+
 		this.updateRendering();
 	}
 
@@ -39,7 +43,7 @@ class FlagIcon extends HTMLElement {
 
 	// render method
 	updateRendering() {
-		this.innerHTML = this.countryCode;
+
 		// Left as an exercise for the reader. But, you'll probably want to
 		// check this.ownerDocument.defaultView to see if we've been
 		// inserted into a document with a browsing context, and avoid

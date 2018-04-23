@@ -20,7 +20,8 @@
     "@webcomponents/webcomponentsjs": "^1.2.0",
     "babel-core": "^6.26.0",
     "babel-html": "^0.5.1",
-    "babel-plugin-transform-custom-element-classes": "^0.1.0"
+    "babel-plugin-transform-custom-element-classes": "^0.1.0",
+    "template-polyfill": "^2.0.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",

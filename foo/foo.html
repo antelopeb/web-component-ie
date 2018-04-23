@@ -1,3 +1,7 @@
+<template id="template">
+	<p class="text">The country is</p>
+</template>
+
 <script>
 	'use strict';
 
@@ -12,24 +16,12 @@
 	var FlagIcon = function (_HTMLElement) {
 		_inherits(FlagIcon, _HTMLElement);
 
-		function FlagIcon() {
+		function FlagIcon(props) {
 			_classCallCheck(this, FlagIcon);
 
-			var _this = _possibleConstructorReturn(this, (FlagIcon.__proto__ || Object.getPrototypeOf(FlagIcon)).call(this));
+			var _this = _possibleConstructorReturn(this, (FlagIcon.__proto__ || Object.getPrototypeOf(FlagIcon)).call(this, props));
 
 			_this.countryCode = null;
-
-			var shadow = _this.attachShadow({ mode: 'open' });
-			var style = document.createElement('style');
-			var paragraph = document.createElement('p');
-
-			var country = _this.getAttribute('country');
-			paragraph.textContent = country;
-
-			style.textContent = 'p {color:red}';
-
-			shadow.appendChild(style);
-			shadow.appendChild(paragraph);
 			return _this;
 		}
 
@@ -53,7 +45,24 @@
 		}, {
 			key: 'connectedCallback',
 			value: function connectedCallback() {
+				var shadow = this.attachShadow({ mode: 'open' }),
+					style = document.createElement('style'),
+					currentDoc = document.querySelector( 'link[href$="foo.html"]').import,
+					template = currentDoc.querySelector('#template'),
+					country = document.createElement("p"),
+					clone = document.importNode(template.content, true);
+
+				style.textContent = 'p.country {color:red}; p.text {color: black}';
+				console.log(currentDoc);
+				country.innerHTML = this.countryCode;
+				country.setAttribute('class', 'country');
+				shadow.appendChild(style);
+				shadow.appendChild(clone);
+				shadow.appendChild(country);
+
 				this.updateRendering();
+
+
 			}
 
 			// is called when the element is removed.
@@ -67,7 +76,7 @@
 		}, {
 			key: 'updateRendering',
 			value: function updateRendering() {
-				this.innerHTML = this.countryCode;
+
 				// Left as an exercise for the reader. But, you'll probably want to
 				// check this.ownerDocument.defaultView to see if we've been
 				// inserted into a document with a browsing context, and avoid
